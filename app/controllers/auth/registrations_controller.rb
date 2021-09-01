@@ -1,2 +1,3 @@
-class Auth::RegistrationsController < ApplicationController
+class Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
+
 end
