@@ -6,11 +6,11 @@
 | string | nickname | null: false |
 | string | email | null: false |
 | string | password | null: false |
-| string | icon |  |
 
 ### relation
 - has_many room, through: userroom
 - has_many userroom
+- has_one_attached :icon
 
 ## room
 | type | column | option |
