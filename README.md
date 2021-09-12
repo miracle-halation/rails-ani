@@ -8,8 +8,8 @@
 | string | password | null: false |
 
 ### relation
-- has_many room, through: userroom
-- has_many userroom
+- has_many room, through: user_room
+- has_many user_room
 - has_one_attached :icon
 
 ## room
@@ -21,8 +21,8 @@
 | string | image | null: false |
 
 ### relation
-- has_many user, through: userroom
-- has_many userroom
+- has_many user, through: user_room
+- has_many user_room
 
 ## UserRoom
 | type | column | option |
