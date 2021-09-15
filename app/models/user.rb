@@ -7,5 +7,5 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
   has_one_attached :icon
-  validates :nickname, presence: true, length: {maximum: 10}
+  validates :nickname, presence: true, length: { maximum: 10 }
 end
