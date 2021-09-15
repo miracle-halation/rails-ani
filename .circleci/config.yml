@@ -24,7 +24,6 @@ jobs:
       - run:
           name: databaseファイル変更
           command: |
-            ls -l config
             mv config/database.yml config/database_1.yml
             mv config/database_2.yml config/database.yml
       - run:
