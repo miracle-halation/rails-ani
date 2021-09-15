@@ -23,7 +23,7 @@ jobs:
             bundle install
       - run:
           name: databaseファイル変更
-          command:
+          command: |
             mv /config/database.yml config/database_1.yml
             mv /config/database_2.yml config/database.yml
       - run:
