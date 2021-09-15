@@ -24,8 +24,8 @@ jobs:
       - run:
           name: databaseファイル変更
           command: |
-            mv /config/database.yml config/database_1.yml
-            mv /config/database_2.yml config/database.yml
+            mv /rails-ani/config/database.yml /rails-ani/config/database_1.yml
+            mv /rails-ani/config/database_2.yml /rails-ani/config/database.yml
       - run:
           name: データベース
           command: |
