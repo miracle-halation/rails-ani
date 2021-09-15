@@ -22,6 +22,11 @@ jobs:
             bundle update
             bundle install
       - run:
+          name: databaseファイル変更
+          command:
+            mv config/database.yml config/database_1.yml
+            mv config/database_2.yml config/database.yml
+      - run:
           name: データベース
           command: |
             dockerize -wait tcp://127.0.0.1:3306 -timeout 120s
