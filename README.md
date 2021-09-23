@@ -20,7 +20,6 @@
 | string | leader | null: false |
 | string | image | null: false |
 | text | description | null:false |
-| string | subtitle | null:false |
 
 ### relation
 - has_many user, through: user_room
