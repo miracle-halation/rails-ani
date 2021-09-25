@@ -1,0 +1,29 @@
+class V1::RoomsController < ApplicationController
+	def index
+	end
+
+	def show
+	end
+
+	def create
+		binding.pry
+		room = Room.new(room_params)
+		if room.save
+			render json: { status: 'SUCCESS', data: room }
+		else
+			render json: { status: 'ERROR', data: room.errors }
+		end
+	end
+
+	def update
+	end
+
+	def destroy
+	end
+
+	private
+
+	def room_params
+		params.require(:room).permit(:name, :description, :image, :private, :leader)
+	end
+end
