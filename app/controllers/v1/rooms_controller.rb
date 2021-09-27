@@ -1,5 +1,7 @@
 class V1::RoomsController < ApplicationController
 	def index
+		rooms = Room.all
+		render json: {status: 'Success', data: rooms}
 	end
 
 	def show
