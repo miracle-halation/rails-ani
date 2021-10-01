@@ -6,7 +6,8 @@ class V1::RoomsController < ApplicationController
 
 	def show
 		room = Room.find(params[:id])
-		render json: {status: 'Success', data: room}
+		users = room.users
+		render json: {status: 'Success', data: [room, users]}
 	end
 
 	def create
