@@ -20,6 +20,12 @@ class V1::RoomsController < ApplicationController
 	end
 
 	def update
+		room = Room.find(params[:id])
+		if room.update(room_params)
+			render json: { status: 'SUCCESS', data: room }
+		else
+			render json: { status: 'ERROR', data: room.errors }
+		end
 	end
 
 	def destroy
