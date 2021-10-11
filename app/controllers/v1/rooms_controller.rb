@@ -21,9 +21,9 @@ class V1::RoomsController < ApplicationController
 
 	def update
 		if @room.update(room_params)
-			render json: { status: 'SUCCESS', data: room }
+			render json: { status: 'SUCCESS', data: @room }
 		else
-			render json: { status: 'ERROR', data: room.errors }
+			render json: { status: 'ERROR', data: @room.errors }
 		end
 	end
 
