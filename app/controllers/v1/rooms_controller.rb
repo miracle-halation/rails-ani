@@ -1,5 +1,5 @@
 class V1::RoomsController < ApplicationController
-	before_action :find_room, only: [:show, :update]
+	before_action :find_room, only: [:show, :update, :destroy]
 	def index
 		rooms = Room.all
 		render json: {status: 'Success', data: rooms}
@@ -28,6 +28,11 @@ class V1::RoomsController < ApplicationController
 	end
 
 	def destroy
+		if @room.destroy
+			render json: { status: 'SUCCESS' }
+		else
+			render json: { status: 'ERROR' }
+		end
 	end
 
 	private
