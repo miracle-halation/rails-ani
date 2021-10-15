@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
   has_many :room_users
   has_many :rooms, through: :room_users
+  has_many :user_tags, dependent: :destroy
+  has_many :tags, through: :user_tag
   has_one_attached :icon
   validates :nickname, presence: true, length: { maximum: 10 }
 end
