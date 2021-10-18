@@ -9,7 +9,19 @@ class User < ActiveRecord::Base
   has_many :room_users
   has_many :rooms, through: :room_users
   has_many :user_tags, dependent: :destroy
-  has_many :tags, through: :user_tag
+  has_many :tags, through: :user_tags
   has_one_attached :icon
   validates :nickname, presence: true, length: { maximum: 10 }
+
+  def tag_save(savetaglist)
+    if self.tags != nil
+      user_tags_records = UserTag.where(user_id: self.id)
+      user_tags_records.destroy_all
+    end
+
+    savetaglist.each do |tag|
+      inspected_tag = Tag.where(name: tag).first_or_create
+      self.tags << inspected_tag
+    end
+  end
 end
