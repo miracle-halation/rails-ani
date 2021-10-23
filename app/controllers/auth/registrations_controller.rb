@@ -15,4 +15,13 @@ class Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
 	def account_update_params
 		params.permit(:address, :myinfo)
 	end
+
+	def render_create_success
+		icon = icon = @resource.icon_url
+		render json: {
+			status: 'success',
+			data:   resource_data,
+			icon_path: icon
+		}
+	end
 end
