@@ -3,6 +3,7 @@
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  include Rails.application.routes.url_helpers
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
@@ -23,5 +24,9 @@ class User < ActiveRecord::Base
       inspected_tag = Tag.where(name: tag).first_or_create
       self.tags << inspected_tag
     end
+  end
+
+  def icon_url
+    self.icon.attached? ? url_for(self.icon) :nil
   end
 end
