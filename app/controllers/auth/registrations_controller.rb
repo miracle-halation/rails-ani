@@ -11,7 +11,6 @@ class Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
 	end
 
 	def destroy
-		binding.pry
 		@user = User.find(params[:id])
 		@user.destroy
 		render json: { status: 'SUCCESS' }
