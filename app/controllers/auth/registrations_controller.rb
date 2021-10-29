@@ -10,6 +10,13 @@ class Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
 		end
 	end
 
+	def destroy
+		binding.pry
+		@user = User.find(params[:id])
+		@user.destroy
+		render json: { status: 'SUCCESS' }
+	end
+
 	private
 
 	def account_update_params
