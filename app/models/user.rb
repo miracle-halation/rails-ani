@@ -15,18 +15,18 @@ class User < ActiveRecord::Base
   validates :nickname, presence: true, length: { maximum: 10 }
 
   def tag_save(savetaglist)
-    if self.tags != nil
-      user_tags_records = UserTag.where(user_id: self.id)
+    unless tags.nil?
+      user_tags_records = UserTag.where(user_id: id)
       user_tags_records.destroy_all
     end
 
     savetaglist.each do |tag|
       inspected_tag = Tag.where(name: tag).first_or_create
-      self.tags << inspected_tag
+      tags << inspected_tag
     end
   end
 
   def icon_url
-    self.icon.attached? ? url_for(self.icon) :nil
+    icon.attached? ? url_for(icon) : nil
   end
 end

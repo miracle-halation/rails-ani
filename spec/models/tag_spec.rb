@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe Tag, type: :model do
   let(:tag) { FactoryBot.build(:tag) }
-  describe "タグ新規作成" do
-    context "成功する時" do
+  describe 'タグ新規作成' do
+    context '成功する時' do
       it '値が正しいとデータを登録することができる' do
         expect(tag).to be_valid
       end
