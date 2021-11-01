@@ -59,4 +59,27 @@ RSpec.describe 'Auth::Registrations', type: :request do
       end
     end
   end
+
+  describe 'Put /auth' do
+    let!(:user) { FactoryBot.create(:user) }
+    context '値が正しいとき' do
+      it 'userの情報を更新することができる' do
+        test_params = { id: user.id, address: 'アップデートテスト団地', myinfo: 'アップデートテスト自己紹介', tags: "テストタグ, テスト２タグ" }
+        expect(user.address).not_to eq('アップデートテスト団地')
+        put '/auth', params: test_params
+        json = JSON.parse(response.body)
+        expect(response.status).to eq(200)
+        expect(json['data']['address']).to eq('アップデートテスト団地')
+        expect(json['data']['myinfo']).to eq('アップデートテスト自己紹介')
+      end
+    end
+  end
+
+  describe 'Delete /auth' do
+    let!(:user) { FactoryBot.create(:user) }
+    it 'userを削除することができる' do
+      test_params = {id: user.id}
+      expect { delete '/auth', params: test_params }.to change(User, :count).by(-1)
+    end
+  end
 end
