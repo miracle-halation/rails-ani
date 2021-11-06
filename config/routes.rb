@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   namespace "v1" do
     resources :rooms, only:[:index, :show, :create, :update, :destroy]
     resources :tags, only:[:show]
+    resources :message, only:[:create, :update, :destroy]
   end
 end
