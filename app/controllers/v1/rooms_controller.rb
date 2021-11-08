@@ -1,5 +1,5 @@
 class V1::RoomsController < ApplicationController
-  before_action :find_room, only: [:show, :update, :destroy]
+  before_action :find_room, except: [:index, :create]
   def index
     rooms = Room.all
     render json: { status: 'Success', data: rooms }
@@ -33,6 +33,18 @@ class V1::RoomsController < ApplicationController
     else
       render json: { status: 'ERROR' }
     end
+  end
+
+  def join
+    @user = User.find(params[:user_id])
+    @room.join_user(@user)
+    render json: { status: 'SUCCESS' }
+  end
+
+  def depart
+    @user = User.find(params[:user_id])
+    @room.join_user(@user)
+    render json: { status: 'SUCCESS' }
   end
 
   private

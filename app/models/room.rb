@@ -8,4 +8,12 @@ class Room < ApplicationRecord
     validates :description, length: { maximum: 500 }
     validates :leader
   end
+
+  def join_user(self, user)
+    self.users << user
+  end
+
+  def depart_user(self, user)
+    self.users.delete(user)
+  end
 end
