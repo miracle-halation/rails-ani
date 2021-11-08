@@ -5,7 +5,12 @@ Rails.application.routes.draw do
   }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   namespace "v1" do
-    resources :rooms, only:[:index, :show, :create, :update, :destroy]
+    resources :rooms, only:[:index, :show, :create, :update, :destroy] do
+      member do
+        post 'join'
+        delete 'depart'
+      end
+    end
     resources :tags, only:[:show]
     resources :message, only:[:create, :update, :destroy]
   end
