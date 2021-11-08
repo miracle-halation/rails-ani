@@ -1,21 +1,21 @@
 class V1::RoomsController < ApplicationController
   before_action :find_room, except: [:index, :create]
   def index
-    rooms = Room.all
-    render json: { status: 'Success', data: rooms }
+    @rooms = Room.all
+    render json: { status: 'Success', data: @rooms }
   end
 
   def show
-    users = @room.users
-    render json: { status: 'Success', data: [@room, users] }
+    @users = @room.users
+    render json: { status: 'Success', data: [@room, @users] }
   end
 
   def create
-    room = Room.new(room_params)
+    @room = Room.new(room_params)
     if room.save
-      render json: { status: 'SUCCESS', data: room }
+      render json: { status: 'SUCCESS', data: @room }
     else
-      render json: { status: 'ERROR', data: room.errors }
+      render json: { status: 'ERROR', data: @room.errors }
     end
   end
 
