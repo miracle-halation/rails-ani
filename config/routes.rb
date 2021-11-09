@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     resources :rooms, only:[:index, :show, :create, :update, :destroy] do
       member do
         post 'join'
-        delete 'depart'
+        post 'depart'
       end
     end
     resources :tags, only:[:show]
