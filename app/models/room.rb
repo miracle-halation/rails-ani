@@ -9,11 +9,11 @@ class Room < ApplicationRecord
     validates :leader
   end
 
-  def join_user(self, user)
+  def join_user(user)
     self.users << user
   end
 
-  def depart_user(self, user)
+  def depart_user(user)
     self.users.delete(user)
   end
 end
