@@ -43,7 +43,7 @@ class V1::RoomsController < ApplicationController
 
   def depart
     @user = User.find(params[:user_id])
-    @room.join_user(@user)
+    @room.depart_user(@user)
     render json: { status: 'SUCCESS' }
   end
 
