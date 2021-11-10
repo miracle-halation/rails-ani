@@ -24,8 +24,9 @@ RSpec.describe 'V1::Rooms', type: :request do
   describe 'POST /create' do
     context '成功する時' do
       it 'ルームが作成され、作成したデータを返す' do
-        room = { room: { name: 'テスト確認ルーム', description: 'テスト確認', private: false, leader: 'test' } }
+        room = { room: { name: 'テスト確認ルーム', description: 'テスト確認', private: false, leader: 'test' }, user_ids: [1,2,3] }
         expect { post v1_rooms_path, params: room }.to change(Room, :count).by(1)
+        binding.pry
         json = JSON.parse(response.body)
         expect(response.status).to eq(200)
         expect(json['data']['name']).to eq('テスト確認ルーム')
@@ -33,19 +34,19 @@ RSpec.describe 'V1::Rooms', type: :request do
     end
     context '失敗する時' do
       it 'nameが空だとルームが作成できずエラーを返す' do
-        room = { room: { name: '', description: 'テスト確認', private: false, leader: 'test' } }
+        room = { room: { name: '', description: 'テスト確認', private: false, leader: 'test' }, user_ids: [1,2,3] }
         expect { post v1_rooms_path, params: room }.to change(Room, :count).by(0)
         json = JSON.parse(response.body)
         expect(json['status']).to eq('ERROR')
       end
       it 'descriptionが空だとルームが作成できずエラーを返す' do
-        room = { room: { name: 'テスト確認ルーム', description: '', private: false, leader: 'test' } }
+        room = { room: { name: 'テスト確認ルーム', description: '', private: false, leader: 'test' }, user_ids: [1,2,3] }
         expect { post v1_rooms_path, params: room }.to change(Room, :count).by(0)
         json = JSON.parse(response.body)
         expect(json['status']).to eq('ERROR')
       end
       it 'leaderが空だとルームが作成できずエラーを返す' do
-        room = { room: { name: 'テスト確認ルーム', description: 'テスト確認', private: false, leader: '' } }
+        room = { room: { name: 'テスト確認ルーム', description: 'テスト確認', private: false, leader: '' }, user_ids: [1,2,3] }
         expect { post v1_rooms_path, params: room }.to change(Room, :count).by(0)
         json = JSON.parse(response.body)
         expect(json['status']).to eq('ERROR')

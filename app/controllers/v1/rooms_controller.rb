@@ -12,7 +12,10 @@ class V1::RoomsController < ApplicationController
 
   def create
     @room = Room.new(room_params)
-    if room.save
+    users_list = params[:user_ids].split(',')
+    @users = User.where(id: users_list)
+    if @room.save
+      @room.join_user(@users)
       render json: { status: 'SUCCESS', data: @room }
     else
       render json: { status: 'ERROR', data: @room.errors }
@@ -51,6 +54,10 @@ class V1::RoomsController < ApplicationController
 
   def room_params
     params.require(:room).permit(:name, :description, :image, :private, :leader)
+  end
+
+  def user_params
+    params.permit(:user_ids)
   end
 
   def find_room
