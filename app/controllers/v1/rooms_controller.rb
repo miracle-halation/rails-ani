@@ -1,8 +1,13 @@
 class V1::RoomsController < ApplicationController
-  before_action :find_room, except: [:index, :create]
+  before_action :find_room, except: [:index, :new, :create]
   def index
     @rooms = Room.all
     render json: { status: 'Success', data: @rooms }
+  end
+
+  def new
+    @users = User.all()
+    render json: { status: 'Success', data: @users }
   end
 
   def show
