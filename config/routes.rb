@@ -12,6 +12,6 @@ Rails.application.routes.draw do
       end
     end
     resources :tags, only:[:show]
-    resources :message, only:[:create, :update, :destroy]
+    resources :messages, only:[:index,:create, :update, :destroy]
   end
 end
