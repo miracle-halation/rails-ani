@@ -7,8 +7,7 @@ class V1::MessagesController < ApplicationController
 	end
 
 	def create
-		@user = User.find(params[:user_id])
-		@message = @user.messages.create(message_params)
+		@message = Message.new(message_params)
 		if @message.save
 			render json: { status: 'SUCCESS', data: @message }
 		else
@@ -35,7 +34,7 @@ class V1::MessagesController < ApplicationController
 	private
 
   def message_params
-    params.require(:message).permit(:content)
+    params.require(:message).permit(:content, :user_id, :room_id)
   end
 
 	def find_message
