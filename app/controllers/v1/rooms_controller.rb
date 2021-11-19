@@ -12,7 +12,8 @@ class V1::RoomsController < ApplicationController
 
   def show
     @users = @room.users
-    render json: { status: 'Success', data: [@room, @users] }
+    @messages = @room.messages
+    render json: { status: 'Success', data: [@room, @users, @messages] }
   end
 
   def create

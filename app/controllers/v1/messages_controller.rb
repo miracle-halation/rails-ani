@@ -1,10 +1,5 @@
 class V1::MessagesController < ApplicationController
-	before_action :find_message, except: [:index, :create]
-	def index
-		@room = Room.find(params[:room_id])
-		@messages = @room.messages
-		render json: { status: 'SUCCESS', data: @messages }
-	end
+	before_action :find_message, except: [:create]
 
 	def create
 		@message = Message.new(message_params)
