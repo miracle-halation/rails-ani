@@ -1,5 +1,6 @@
 class V1::MessagesController < ApplicationController
 	before_action :find_message, except: [:create]
+	before_action :find_user_icon, except: [:destroy]
 
 	def create
 		@message = Message.new(message_params)
@@ -29,10 +30,15 @@ class V1::MessagesController < ApplicationController
 	private
 
   def message_params
-    params.require(:message).permit(:content, :user_id, :room_id)
+    params.require(:message).permit(:content, :user_id, :room_id).merge(icon_path: @icon_path)
   end
 
 	def find_message
     @message = Message.find(params[:id])
   end
+
+	def find_user_icon
+		@user = User.find_by(id: params[:message][:user_id])
+		@icon_path = @user.icon_url
+	end
 end
