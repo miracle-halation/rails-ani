@@ -10,10 +10,10 @@ class Room < ApplicationRecord
   end
 
   def join_user(user)
-    self.users << user
+    users << user
   end
 
   def depart_user(user)
-    self.users.delete(user)
+    users.delete(user)
   end
 end

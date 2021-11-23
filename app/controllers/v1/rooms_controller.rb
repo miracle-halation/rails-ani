@@ -6,7 +6,7 @@ class V1::RoomsController < ApplicationController
   end
 
   def new
-    @users = User.all()
+    @users = User.all
     render json: { status: 'Success', data: @users }
   end
 

@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe "V1::Messages", type: :request do
+RSpec.describe 'V1::Messages', type: :request do
   let!(:room) { FactoryBot.create(:room) }
   let!(:user) { FactoryBot.create(:user) }
-  describe "POST /create" do
+  describe 'POST /create' do
     context '成功する時' do
       it 'Messageが作成され、作成したデータを返す' do
         message = { message: { content: '新規投稿', user_id: user.id, room_id: room.id } }
