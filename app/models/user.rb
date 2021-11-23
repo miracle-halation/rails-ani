@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_many :rooms, through: :room_users
   has_many :user_tags, dependent: :destroy
   has_many :tags, through: :user_tags
+  has_many :messages
   has_one_attached :icon
   validates :nickname, presence: true, length: { maximum: 10 }
 
