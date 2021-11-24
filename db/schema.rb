@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 2021_11_24_131358) do
   create_table "friends", charset: "utf8mb4", force: :cascade do |t|
     t.integer "applicant"
     t.integer "friend_id"
+    t.boolean "accept", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["applicant", "friend_id"], name: "index_friends_on_applicant_and_friend_id", unique: true

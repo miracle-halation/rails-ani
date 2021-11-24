@@ -3,6 +3,7 @@ class CreateFriends < ActiveRecord::Migration[6.1]
     create_table :friends do |t|
       t.integer :applicant
       t.integer :friend_id
+      t.boolean :accept, default: false
 
       t.timestamps
     end
