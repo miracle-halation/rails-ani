@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_21_030850) do
+ActiveRecord::Schema.define(version: 2021_11_24_131358) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -38,6 +38,16 @@ ActiveRecord::Schema.define(version: 2021_11_21_030850) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "friends", charset: "utf8mb4", force: :cascade do |t|
+    t.integer "applicant"
+    t.integer "friend_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["applicant", "friend_id"], name: "index_friends_on_applicant_and_friend_id", unique: true
+    t.index ["applicant"], name: "index_friends_on_applicant"
+    t.index ["friend_id"], name: "index_friends_on_friend_id"
   end
 
   create_table "messages", charset: "utf8mb4", force: :cascade do |t|
