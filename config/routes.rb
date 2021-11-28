@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     end
     resources :tags, only:[:show]
     resources :messages, only:[:create, :update, :destroy]
-    resource :friends, only: [:index, :destroy] do
+    resources :friends, only: [:show, :destroy] do
       collection do
         post 'apply'
         post 'approval'
