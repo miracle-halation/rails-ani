@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
   end
 
   def accept?(other_id)
-    friend = applicant_relationships.find_by(friend_id: other_id)
+    friend = friend_relationships.find_by(applicant_id: other_id)
     return friend.accept
   end
 
@@ -49,14 +49,14 @@ class User < ActiveRecord::Base
     applicant_relationships.create(applicant_id: current_user,friend_id: other_id)
   end
 
-  def accept!(current_user, other_id)
-    own = applicant_relationships.where("(applicant_id = ?) AND (friend_id = ?) AND (accept = ?)", current_user, other_id, false)
+  def accept!(current_user, other)
+    own = friend_relationships.where("(applicant_id = ?) AND (friend_id = ?) AND (accept = ?)", other.id, current_user, false)
     own.update(accept: true)
-    friend = friend_relationships("(applicant_id = ?) AND (friend_id = ?) AND (accept = ?)", other_id, current_user, false)
-    if friend
-      friend.update(accept: true)
+    friend = applicant_relationships.where("(applicant_id = ?) AND (friend_id = ?) AND (accept = ?)", current_user, other.id, false)
+    if friend.blank?
+      applicant_relationships.create(applicant_id: current_user,friend_id: other.id, accept: true)
     else
-      friend_relationships.create(applicant_id: other_id,friend_id: current_user, accept: true)
+      friend.update(accept: true)
     end
   end
 
