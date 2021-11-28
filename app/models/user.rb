@@ -13,9 +13,9 @@ class User < ActiveRecord::Base
   has_many :tags, through: :user_tags
   has_many :messages
   has_many :friend_relationships, foreign_key: 'friend_id', class_name: "Friend", dependent: :destroy
-  has_many :friends, through: :friend_relationships
   has_many :applicant_relationships, foreign_key: 'applicant_id', class_name: "Friend", dependent: :destroy
-  has_many :applicants, through: :applicant_relationships
+  has_many :friends, through: :friend_relationships, source: :applicant
+  has_many :applicants, through: :applicant_relationships, source: :friend
   has_one_attached :icon
   validates :nickname, presence: true, length: { maximum: 10 }
 
@@ -36,7 +36,8 @@ class User < ActiveRecord::Base
   end
 
   def friend?(other_id)
-    applicant_relationships.find_by(friend_id: other_id)
+    friend = applicant_relationships.find_by(friend_id: other_id)
+    return friend.blank?
   end
 
   def accept?(other_id)
@@ -46,14 +47,17 @@ class User < ActiveRecord::Base
 
   def approval_pending(current_user, other_id)
     applicant_relationships.create(applicant_id: current_user,friend_id: other_id)
-    friend_relationships.create(applicant_id: other_id,friend_id: current_user)
   end
 
   def accept!(current_user, other_id)
     own = applicant_relationships.where("(applicant_id = ?) AND (friend_id = ?) AND (accept = ?)", current_user, other_id, false)
     own.update(accept: true)
-    friend = friend_relationships.where("(applicant_id = ?) AND (friend_id = ?) AND (accept = ?)", other_id, current_user, false)
-    friend.update(accept: true)
+    friend = friend_relationships("(applicant_id = ?) AND (friend_id = ?) AND (accept = ?)", other_id, current_user, false)
+    if friend
+      friend.update(accept: true)
+    else
+      friend_relationships.create(applicant_id: other_id,friend_id: current_user, accept: true)
+    end
   end
 
   def del_friend(current_user, other_id)
