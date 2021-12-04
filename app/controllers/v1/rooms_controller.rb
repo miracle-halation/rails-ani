@@ -59,7 +59,7 @@ class V1::RoomsController < ApplicationController
   private
 
   def room_params
-    params.require(:room).permit(:name, :description, :image, :private, :leader)
+    params.require(:room).permit(:name, :genre, :description, :image, :private, :leader)
   end
 
   def user_params
