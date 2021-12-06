@@ -11,6 +11,9 @@ Rails.application.routes.draw do
         post 'join'
         post 'depart'
       end
+      collection do
+        post 'search'
+      end
     end
     resources :tags, only:[:show]
     resources :messages, only:[:create, :update, :destroy]
