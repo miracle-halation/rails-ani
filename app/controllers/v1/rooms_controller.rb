@@ -1,5 +1,5 @@
 class V1::RoomsController < ApplicationController
-  before_action :find_room, except: [:index, :new, :create]
+  before_action :find_room, except: [:index, :new, :create, :search]
   def index
     @rooms = Room.all
     render json: { status: 'Success', data: @rooms }
@@ -54,6 +54,11 @@ class V1::RoomsController < ApplicationController
     @user = User.find(params[:user_id])
     @room.depart_user(@user)
     render json: { status: 'SUCCESS' }
+  end
+
+  def search
+    @rooms = Room.where('name LIKE ? OR description LIKE ? OR genre LIKE ?', "%#{search_value}%", "%#{search_value}%", "%#{search_value}%")
+    render json: { status: 'SUCCESS', data: @rooms }
   end
 
   private
