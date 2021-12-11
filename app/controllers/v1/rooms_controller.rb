@@ -58,7 +58,7 @@ class V1::RoomsController < ApplicationController
 
   def search
     search_value = params[:data]
-    @rooms = Room.where('name LIKE ? OR description LIKE ? OR genre LIKE ?', "%#{search_value}%", "%#{search_value}%", "%#{search_value}%")
+    @rooms = Room.where(private: 0).where('name LIKE ? OR description LIKE ? OR genre LIKE ?', "%#{search_value}%", "%#{search_value}%", "%#{search_value}%")
     render json: { status: 'SUCCESS', data: @rooms }
   end
 
