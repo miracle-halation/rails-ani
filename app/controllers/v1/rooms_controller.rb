@@ -20,6 +20,7 @@ class V1::RoomsController < ApplicationController
     @room = Room.new(room_params)
     users_list = params[:user_ids].split(',')
     @users = User.where(id: users_list)
+    @room['image_path'] = @room.image_url
     if @room.save
       @room.join_user(@users)
       render json: { status: 'SUCCESS', data: @room }
@@ -30,6 +31,8 @@ class V1::RoomsController < ApplicationController
 
   def update
     if @room.update(room_params)
+      image_path = @room.image_url
+      @room.update_attribute(:image_path, image_path)
       render json: { status: 'SUCCESS', data: @room }
     else
       render json: { status: 'ERROR', data: @room.errors }
@@ -75,10 +78,6 @@ class V1::RoomsController < ApplicationController
 
   def room_params
     params.require(:room).permit(:name, :genre, :description, :image, :private, :leader)
-  end
-
-  def user_params
-    params.permit(:user_ids)
   end
 
   def find_room
