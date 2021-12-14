@@ -8,7 +8,8 @@ RSpec.describe 'V1::Rooms', type: :request do
       get v1_rooms_path
       json = JSON.parse(response.body)
       expect(response.status).to eq(200)
-      expect(json['data'].length).to eq(5)
+      expect(json['data'].length).to eq(2)
+      expect(json['data'][0].length).to eq(5)
     end
   end
   describe 'GET /show' do
@@ -24,7 +25,7 @@ RSpec.describe 'V1::Rooms', type: :request do
   describe 'POST /create' do
     context '成功する時' do
       it 'ルームが作成され、作成したデータを返す' do
-        room = { room: { name: 'テスト確認ルーム', description: 'テスト確認', private: false, leader: 'test' }, user_ids: [1, 2, 3] }
+        room = { room: { name: 'テスト確認ルーム', description: 'テスト確認', private: false, leader: 'test', genre: 'アニメ' }, user_ids: [1, 2, 3] }
         expect { post v1_rooms_path, params: room }.to change(Room, :count).by(1)
         json = JSON.parse(response.body)
         expect(response.status).to eq(200)

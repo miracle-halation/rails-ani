@@ -4,5 +4,6 @@ FactoryBot.define do
     description { 'テストの説明' }
     private { false }
     leader { 'testユーザー' }
+    genre {'ゲーム'}
   end
 end
