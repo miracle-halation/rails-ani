@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :friend do
-    applicant { 1 }
-    friend_id { 1 }
+    applicant_id { FactoryBot.create(:user).id }
+    friend_id { FactoryBot.create(:user).id }
   end
 end
