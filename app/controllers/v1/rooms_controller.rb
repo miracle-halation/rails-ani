@@ -67,7 +67,8 @@ class V1::RoomsController < ApplicationController
       search_value = params[:data].split(/[[:blank:]]+/)
       @rooms = []
       search_value.each do |src|
-        rooms_data = Room.where(private: 0).where('name LIKE ? OR description LIKE ? OR genre LIKE ?', "%#{src}%", "%#{src}%", "%#{src}%")
+        rooms_data = Room.where(private: 0).where('name LIKE ? OR description LIKE ? OR genre LIKE ?', "%#{src}%", "%#{src}%",
+                                                  "%#{src}%")
         @rooms += rooms_data
       end
       @rooms.uniq!

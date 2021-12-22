@@ -32,7 +32,7 @@ RSpec.describe 'Auth::Registrations', type: :request do
     let!(:user) { FactoryBot.create(:user) }
     context '値が正しいとき' do
       it '認証に成功し、成功したデータを返す' do
-        test_params = { email: user.email , password: 'testtest' }
+        test_params = { email: user.email, password: 'testtest' }
         post '/auth/sign_in', params: test_params
         json = JSON.parse(response.body)
         expect(response.status).to eq(200)
