@@ -2,13 +2,14 @@ require 'rails_helper'
 
 RSpec.describe 'V1::Rooms', type: :request do
   let!(:room) { FactoryBot.create_list(:room, 5) }
-  let(:user) { FactoryBot.create(user) }
+  let(:user) { FactoryBot.create(:user) }
   describe 'GET /index' do
     it 'Roomの一覧データを返す' do
       get v1_rooms_path
       json = JSON.parse(response.body)
       expect(response.status).to eq(200)
-      expect(json['data'].length).to eq(5)
+      expect(json['data'].length).to eq(2)
+      expect(json['data'][0].length).to eq(5)
     end
   end
   describe 'GET /show' do
@@ -24,7 +25,8 @@ RSpec.describe 'V1::Rooms', type: :request do
   describe 'POST /create' do
     context '成功する時' do
       it 'ルームが作成され、作成したデータを返す' do
-        room = { room: { name: 'テスト確認ルーム', description: 'テスト確認', private: false, leader: 'test' }, user_ids: [1, 2, 3] }
+        room = { room: { name: 'テスト確認ルーム', description: 'テスト確認', private: false, leader: 'test', genre: 'アニメ' },
+                 user_ids: [1, 2, 3] }
         expect { post v1_rooms_path, params: room }.to change(Room, :count).by(1)
         json = JSON.parse(response.body)
         expect(response.status).to eq(200)
@@ -95,6 +97,46 @@ RSpec.describe 'V1::Rooms', type: :request do
       expect { delete "/v1/rooms/#{last_room.id}" }.to change(Room, :count).by(-1)
       json = JSON.parse(response.body)
       expect(json['status']).to eq('SUCCESS')
+    end
+  end
+  describe 'POST /join' do
+    let!(:second_room) { FactoryBot.create(:room, name: 'テスト確認ルーム') }
+    it 'ユーザーをルームに所属させる' do
+      expect { post join_v1_room_path(second_room, user_id: user.id) }.to change(second_room.users, :count).by(1)
+      json = JSON.parse(response.body)
+      expect(json['status']).to eq('SUCCESS')
+    end
+  end
+  describe 'POST /depart' do
+    let!(:second_room) { FactoryBot.create(:room, name: 'テスト確認ルーム') }
+    it 'ユーザーをルームから脱退させる' do
+      second_room.join_user(user)
+      expect { post depart_v1_room_path(second_room, user_id: user.id) }.to change(second_room.users, :count).by(-1)
+      json = JSON.parse(response.body)
+      expect(json['status']).to eq('SUCCESS')
+    end
+  end
+  describe 'POST /search' do
+    let!(:private_rooms) { FactoryBot.create_list(:room, 5, private: false) }
+    let!(:private_rooms) { FactoryBot.create_list(:room, 5, private: true) }
+    context 'paramsにデータがないとき' do
+      it 'パブリックのルーム一覧を返す' do
+        post search_v1_rooms_path(data: '')
+        json = JSON.parse(response.body)
+        expect(json['status']).to eq('SUCCESS')
+        expect(json['data'].count).to eq(5)
+        expect(json['data'][0]['private']).to be(false)
+      end
+    end
+    context 'paramsにデータがあるとき' do
+      let!(:room) { FactoryBot.create(:room, name: 'テスト確認ルーム') }
+      it '検索値で曖昧検索を行い、その値を返す' do
+        post search_v1_rooms_path(data: 'テスト')
+        json = JSON.parse(response.body)
+        expect(json['status']).to eq('SUCCESS')
+        expect(json['data'].count).to eq(1)
+        expect(json['data'][0]['name']).to eq('テスト確認ルーム')
+      end
     end
   end
 end

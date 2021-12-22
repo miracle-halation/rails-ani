@@ -1,4 +1,5 @@
 class Room < ApplicationRecord
+  include Rails.application.routes.url_helpers
   has_many :room_users, dependent: :destroy
   has_many :users, through: :room_users
   has_many :messages
@@ -15,5 +16,9 @@ class Room < ApplicationRecord
 
   def depart_user(user)
     users.delete(user)
+  end
+
+  def image_url
+    image.attached? ? url_for(image) : nil
   end
 end
