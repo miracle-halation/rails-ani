@@ -103,7 +103,9 @@ RSpec.describe 'V1::Rooms', type: :request do
   describe 'POST /join' do
     let!(:second_room) { FactoryBot.create(:room, name: 'テスト確認ルーム') }
     it 'ユーザーをルームに所属させる' do
-      expect { post join_v1_room_path(second_room, user_id: user.id), headers: auth_headers }.to change(second_room.users, :count).by(1)
+      expect do
+        post join_v1_room_path(second_room, user_id: user.id), headers: auth_headers
+      end.to change(second_room.users, :count).by(1)
       json = JSON.parse(response.body)
       expect(json['status']).to eq('SUCCESS')
     end
@@ -112,7 +114,9 @@ RSpec.describe 'V1::Rooms', type: :request do
     let!(:second_room) { FactoryBot.create(:room, name: 'テスト確認ルーム') }
     it 'ユーザーをルームから脱退させる' do
       second_room.join_user(user)
-      expect { post depart_v1_room_path(second_room, user_id: user.id), headers: auth_headers }.to change(second_room.users, :count).by(-1)
+      expect do
+        post depart_v1_room_path(second_room, user_id: user.id), headers: auth_headers
+      end.to change(second_room.users, :count).by(-1)
       json = JSON.parse(response.body)
       expect(json['status']).to eq('SUCCESS')
     end
