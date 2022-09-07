@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2021_12_11_074546) do
 
-  create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
+  create_table "active_storage_attachments", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.bigint "record_id", null: false
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_074546) do
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
-  create_table "active_storage_blobs", charset: "utf8mb4", force: :cascade do |t|
+  create_table "active_storage_blobs", charset: "utf8mb3", force: :cascade do |t|
     t.string "key", null: false
     t.string "filename", null: false
     t.string "content_type"
@@ -34,13 +34,13 @@ ActiveRecord::Schema.define(version: 2021_12_11_074546) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "active_storage_variant_records", charset: "utf8mb4", force: :cascade do |t|
+  create_table "active_storage_variant_records", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "friends", charset: "utf8mb4", force: :cascade do |t|
+  create_table "friends", charset: "utf8mb3", force: :cascade do |t|
     t.integer "applicant_id"
     t.integer "friend_id"
     t.boolean "accept", default: false
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_074546) do
     t.index ["friend_id"], name: "index_friends_on_friend_id"
   end
 
-  create_table "messages", charset: "utf8mb4", force: :cascade do |t|
+  create_table "messages", charset: "utf8mb3", force: :cascade do |t|
     t.text "content", null: false
     t.bigint "user_id", null: false
     t.bigint "room_id", null: false
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_074546) do
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
-  create_table "room_users", charset: "utf8mb4", force: :cascade do |t|
+  create_table "room_users", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "room_id"
     t.datetime "created_at", precision: 6, null: false
@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_074546) do
     t.index ["user_id"], name: "index_room_users_on_user_id"
   end
 
-  create_table "rooms", charset: "utf8mb4", force: :cascade do |t|
+  create_table "rooms", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.text "description", null: false
     t.boolean "private", default: false, null: false
@@ -82,13 +82,13 @@ ActiveRecord::Schema.define(version: 2021_12_11_074546) do
     t.text "image_path"
   end
 
-  create_table "tags", charset: "utf8mb4", force: :cascade do |t|
+  create_table "tags", charset: "utf8mb3", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "user_tags", charset: "utf8mb4", force: :cascade do |t|
+  create_table "user_tags", charset: "utf8mb3", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "tag_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 2021_12_11_074546) do
     t.index ["user_id"], name: "index_user_tags_on_user_id"
   end
 
-  create_table "users", charset: "utf8mb4", force: :cascade do |t|
+  create_table "users", charset: "utf8mb3", force: :cascade do |t|
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
     t.string "encrypted_password", default: "", null: false
