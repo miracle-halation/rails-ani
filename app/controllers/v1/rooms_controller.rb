@@ -1,5 +1,7 @@
 class V1::RoomsController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_room, except: [:index, :new, :create, :search]
+
   def index
     @rooms = Room.all
     @favorite_rooms = Room.joins(:room_users).group(:room_id).order('count(user_id) desc')

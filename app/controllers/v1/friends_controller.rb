@@ -1,4 +1,5 @@
 class V1::FriendsController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_user, only: [:show, :destroy]
   before_action :current_user, only: [:apply, :approval]
 

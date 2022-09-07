@@ -1,4 +1,5 @@
 class V1::MessagesController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_message, except: [:create]
   before_action :find_user_icon, except: [:destroy]
 
