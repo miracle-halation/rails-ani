@@ -1,9 +1,10 @@
 class V1::MessagesController < ApplicationController
+  before_action :authenticate_user!
   before_action :find_message, except: [:create]
   before_action :find_user_icon, except: [:destroy]
 
   def create
-    @message = Message.new(message_params)
+    @message = current_user.messages.build(message_params)
     if @message.save
       render json: { status: 'SUCCESS', data: @message }
     else
@@ -30,7 +31,7 @@ class V1::MessagesController < ApplicationController
   private
 
   def message_params
-    params.require(:message).permit(:content, :user_id, :room_id).merge(icon_path: @icon_path)
+    params.require(:message).permit(:content, :room_id).merge(icon_path: @icon_path)
   end
 
   def find_message
@@ -38,7 +39,6 @@ class V1::MessagesController < ApplicationController
   end
 
   def find_user_icon
-    @user = User.find_by(id: params[:message][:user_id])
-    @icon_path = @user.icon_url
+    @icon_path = current_user.icon_url
   end
 end

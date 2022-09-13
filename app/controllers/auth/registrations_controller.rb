@@ -1,4 +1,6 @@
 class Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
+  before_action :authenticate_user!, only: [:update, :destroy]
+
   def update
     @user = User.find(params[:id])
     tag_list = params[:tags].split(',')
