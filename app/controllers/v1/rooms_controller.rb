@@ -15,7 +15,7 @@ class V1::RoomsController < ApplicationController
 
   def show
     @users = @room.users
-    @messages = @room.messages
+    @messages = @room.messages.includes(:user).joins("LEFT OUTER JOIN users ON users.id = messages.user_id").select("messages.*, users.nickname")
     render json: { status: 'Success', data: [@room, @users, @messages] }
   end
 
