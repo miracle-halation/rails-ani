@@ -64,10 +64,11 @@ class V1::RoomsController < ApplicationController
   end
 
   def search
-    if params[:data].empty?
+    serach_params = params[:data]
+    if serach_params.empty?
       @rooms = Room.where(private: 0)
     else
-      search_value = params[:data].split(/[[:blank:]]+/)
+      search_value = serach_params.split(/[[:blank:]]+/)
       @rooms = []
       search_value.each do |src|
         rooms_data = Room.where(private: 0).where('name LIKE ? OR description LIKE ? OR genre LIKE ?', "%#{src}%", "%#{src}%",

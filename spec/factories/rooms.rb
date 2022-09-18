@@ -3,7 +3,7 @@ FactoryBot.define do
     name { 'testルーム' }
     description { 'テストの説明' }
     private { false }
-    leader { 'testユーザー' }
+    leader { '1' }
     genre { 'ゲーム' }
   end
 end
