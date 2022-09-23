@@ -3,9 +3,8 @@ class V1::RoomsController < ApplicationController
   before_action :find_room, except: [:index, :new, :create, :search]
 
   def index
-    @rooms = Room.all
-    @favorite_rooms = Room.joins(:room_users).group(:room_id).order('count(user_id) desc')
-    render json: { status: 'Success', data: [@rooms, @favorite_rooms] }
+    @rooms = current_user.rooms
+    render json: { status: 'Success', data: [@rooms] }
   end
 
   def new
