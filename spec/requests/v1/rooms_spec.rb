@@ -5,11 +5,13 @@ RSpec.describe 'V1::Rooms', type: :request do
   let(:user) { FactoryBot.create(:user) }
   let!(:auth_headers) { login(user) }
   describe 'GET /index' do
+    before do
+      user.rooms << room
+    end
     it 'Roomの一覧データを返す' do
       get v1_rooms_path, headers: auth_headers
       json = JSON.parse(response.body)
       expect(response.status).to eq(200)
-      expect(json['data'].length).to eq(2)
       expect(json['data'][0].length).to eq(5)
     end
   end

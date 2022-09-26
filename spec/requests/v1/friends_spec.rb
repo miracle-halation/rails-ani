@@ -31,7 +31,7 @@ RSpec.describe 'V1::Friends', type: :request do
   end
   describe 'DELETE /destroy' do
     it 'フレンドを削除することができる' do
-      expect { delete v1_friend_path(user.id, friend_id: apply_user.id), headers: auth_headers }.to change(Friend, :count).by(-2)
+      expect { delete v1_friend_path(apply_user.id), headers: auth_headers }.to change(Friend, :count).by(-2)
       json = JSON.parse(response.body)
       expect(json['status']).to eq('SUCCESS')
       expect(json['data']).to eq('フレンド解除に成功しました')
