@@ -8,7 +8,7 @@ class V1::FriendsController < ApplicationController
   end
 
   def destroy
-    current_user.del_friend(current_user.id, params[:friend_id])
+    current_user.del_friend(current_user.id, params[:id])
     render json: { status: 'SUCCESS', data: 'フレンド解除に成功しました', color: 'green' }
   end
 

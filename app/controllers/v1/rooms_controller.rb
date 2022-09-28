@@ -3,9 +3,8 @@ class V1::RoomsController < ApplicationController
   before_action :find_room, except: [:index, :new, :create, :search]
 
   def index
-    @rooms = Room.all
-    @favorite_rooms = Room.joins(:room_users).group(:room_id).order('count(user_id) desc')
-    render json: { status: 'Success', data: [@rooms, @favorite_rooms] }
+    @rooms = current_user.rooms
+    render json: { status: 'Success', data: [@rooms] }
   end
 
   def new
@@ -15,8 +14,11 @@ class V1::RoomsController < ApplicationController
 
   def show
     @users = @room.users
-    @messages = @room.messages
-    render json: { status: 'Success', data: [@room, @users, @messages] }
+    @friends = current_user.applicants.joins(:friends).select('users.*, friends.accept')
+    @messages = @room.messages.includes(:user)
+                     .joins('LEFT OUTER JOIN users ON users.id = messages.user_id')
+                     .select('messages.*, users.nickname')
+    render json: { status: 'Success', data: [@room, @users, @messages, @friends] }
   end
 
   def create
@@ -63,10 +65,11 @@ class V1::RoomsController < ApplicationController
   end
 
   def search
-    if params[:data].empty?
+    serach_params = params[:data]
+    if serach_params.empty?
       @rooms = Room.where(private: 0)
     else
-      search_value = params[:data].split(/[[:blank:]]+/)
+      search_value = serach_params.split(/[[:blank:]]+/)
       @rooms = []
       search_value.each do |src|
         rooms_data = Room.where(private: 0).where('name LIKE ? OR description LIKE ? OR genre LIKE ?', "%#{src}%", "%#{src}%",
