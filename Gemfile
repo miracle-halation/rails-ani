@@ -25,6 +25,8 @@ gem 'rack-cors'
 gem 'pry-rails', '~> 0.3.9'
 gem 'devise', '~> 4.8'
 gem 'devise_token_auth', '~> 1.2'
+gem 'aws-sdk-s3', require: false
+gem 'dotenv-rails'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
