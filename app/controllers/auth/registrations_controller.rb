@@ -28,7 +28,7 @@ class Auth::RegistrationsController < DeviseTokenAuth::RegistrationsController
 
   def render_create_success
     icon = @resource.icon_url
-    @resource.update(icon_path: icon)
+    @resource.update_attribute(:icon_path, icon)
     render json: {
       status: 'success',
       data: resource_data,
