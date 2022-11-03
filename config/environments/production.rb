@@ -35,8 +35,8 @@ Rails.application.configure do
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
-  config.action_cable.url = 'ws://localhost/cable'
-  config.action_cable.allowed_request_origins = [ 'http://localhost:3000' ]
+  config.action_cable.url = 'ws://backend.yk-animedia-service.link/cable'
+  config.action_cable.allowed_request_origins = [ 'https://backend.yk-animedia-service.link:3000' ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
@@ -110,5 +110,5 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
-  Rails.application.routes.default_url_options = { host: 'localhost', port: 80 }
+  Rails.application.routes.default_url_options = { host: 'backend.yk-animedia-service.link', port: 80 }
 end
