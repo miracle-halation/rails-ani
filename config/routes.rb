@@ -23,5 +23,6 @@ Rails.application.routes.draw do
         post 'approval'
       end
     end
+    get :health_check, to: 'healthcheck#index'
   end
 end
