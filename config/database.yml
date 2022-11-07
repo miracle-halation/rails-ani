@@ -53,4 +53,3 @@ production:
   database: rails_ani_production
   username: <%= ENV['RAILS_ANI_DATABASE_USER'] %>
   password: <%= ENV['RAILS_ANI_DATABASE_PASSWORD'] %>
-  url: <%= ENV['RAILS_ANI_RDS_PATH'] %>
