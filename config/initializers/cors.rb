@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'https://yk-animedia-service.link:3000'
+    origins 'https://yk-animedia-service.link:3000', 'https://yk-animedia-service.link'
 
     resource '*',
       headers: :any,
